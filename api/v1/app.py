@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Inicia una app en flask"""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, Blueprint, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from models.state import State
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def cerrar(self):
     """Elimina la sesión actual de SQLAlchemy"""
     storage.close()
+
+
+@app.errorhandler(404)
+def error_handler(error):
+    """No found 404"""
+    return(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
