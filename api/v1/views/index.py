@@ -1,26 +1,14 @@
 #!/usr/bin/python3
+"""Inicia una app en flask"""
 
-"""Indexhtml."""
 from api.v1.views import app_views
-from flask import Flask, Blueprint, jsonify
 from models import storage
+from models.state import State
+from os import getenv
+from flask import jsonify
 
 
-@app_views.route("/status", strict_slashes=False)
-def hbnbStatus():
-    """def hbnbStatus"""
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
+def status():
+    """ estatus cuo xd """
     return jsonify({"status": "OK"})
-
-
-@app_views.route("/stats")
-def stat():
-    """retrieves the number of each objects"""
-    dic = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    }
-    return(jsonify(dic))
