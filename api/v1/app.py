@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Connect"""
+
 import os
 from models import storage
 from api.v1.views import app_views
