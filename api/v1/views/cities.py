@@ -75,7 +75,7 @@ def putC(city_id):
     if datos is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     for clave, valor in datos.items():
-        if clave not in ["id", "state_id", "created_at", "updated_at"]:
+        if clave not in ["id", "created_at", "updated_at"]:
             setattr(ciudad, clave, valor)
     storage.save()
     return make_response(jsonify(ciudad.to_dict()), 200)
