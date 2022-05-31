@@ -49,20 +49,23 @@ def eliminarC(city_id):
 @app_views.route(
     "/states/<state_id>/cities", methods=["POST"], strict_slashes=False
     )
-def crearC(state_id):
-    """ Crea un nuevo objeto ciudad """
+def post_city(state_id):
+    """
+    Creates a City
+    """
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
-    datos = request.get_json()
-    if datos is None:
-        abort(400, "Not a JSON")
-    if "name" not in datos:
-        abort(400, "Missing name")
-    nuevo = City(**datos)
-    nuevo.state_id = state_id
-    nuevo.save()
-    return make_response(jsonify(nuevo.to_dict()), 201)
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    if 'name' not in request.get_json():
+        abort(400, description="Missing name")
+
+    data = request.get_json()
+    instance = City(**data)
+    instance.state_id = state.id
+    instance.save()
+    return make_response(jsonify(instance.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"], strict_slashes=False)
