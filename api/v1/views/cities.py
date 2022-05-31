@@ -20,7 +20,7 @@ def todosC(state_id):
         abort(404)
     return jsonify(
         [city.to_dict() for city in storage.all(City).values()]
-        ), 200
+        )
 
 
 @app_views.route('cities/<city_id>', methods=['GET'], strict_slashes=False)
@@ -29,7 +29,7 @@ def unitoC(city_id):
     ciudad = storage.get(City, city_id)
     if ciudad is None:
         abort(404)
-    return jsonify(ciudad.to_dict()), 200
+    return jsonify(ciudad.to_dict())
 
 
 @app_views.route(
@@ -53,7 +53,7 @@ def crearC(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    datos = request.get_json(silent=True)
+    datos = request.get_json()
     if datos is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in datos:
