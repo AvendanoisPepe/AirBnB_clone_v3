@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-"""Cree una nueva vista para objetos de ciudad que maneje
-todas las acciones predeterminadas de la API RESTFul:
+"""Cree una nueva vista para objetos de ciudad
+que maneje todas las acciones predeterminadas
+de la API RESTFul
 """
 
 from api.v1.views import app_views
