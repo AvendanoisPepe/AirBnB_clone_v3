@@ -16,13 +16,14 @@ from models.city import City
     )
 def todosC(state_id):
     """ Todos los objetos de la ciudad """
-    ciudades = []
-    estado = storage.get(State, state_id)
-    if estado is None:
+    list_cities = []
+    state = storage.get(State, state_id)
+    if not state:
         abort(404)
-    for ciudad in state.cities:
-        ciudades.append(ciudad.to_dict())
-    return jsonify(ciudades)
+    for city in state.cities:
+        list_cities.append(city.to_dict())
+
+    return jsonify(list_cities)
 
 
 @app_views.route('cities/<city_id>', methods=['GET'], strict_slashes=False)
