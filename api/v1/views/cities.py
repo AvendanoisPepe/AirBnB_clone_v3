@@ -42,7 +42,7 @@ def eliminarC(city_id):
         abort(404)
     storage.delete(ciudad)
     storage.save()
-    return make_response(jsonify({}), 200)
+    return jsonify({}), 200
 
 
 @app_views.route(
@@ -55,9 +55,9 @@ def crearC(state_id):
         abort(404)
     datos = request.get_json()
     if datos is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        abort(400, "Not a JSON")
     if "name" not in datos:
-        return ("Missing name", 400)
+        abort(400, "Missing name")
     nuevo = City(**datos)
     nuevo.state_id = state_id
     nuevo.save()
@@ -73,9 +73,9 @@ def putC(city_id):
 
     datos = request.get_json(silent=True)
     if datos is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        abort(400, "Not a JSON")
     for clave, valor in datos.items():
-        if clave not in ["id", "created_at", "updated_at"]:
+        if clave not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(ciudad, clave, valor)
     storage.save()
     return make_response(jsonify(ciudad.to_dict()), 200)
